@@ -11,9 +11,8 @@ const facultyListPage = (req, res) => {
     const faculty = getSortedFaculty(sortBy)
 
     console.log("sortBy:", sortBy);
-    console.log("faculty count:", faculty.length);  // add this
-    console.log("faculty:", faculty);               // add this
-
+    console.log("faculty count:", faculty.length);
+    console.log("faculty:", faculty);
     res.render("faculty/list", {
         title: "Faculty Directory",
         faculty,

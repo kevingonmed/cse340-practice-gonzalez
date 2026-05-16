@@ -75,12 +75,12 @@ const faculty = {
 };
 
 const getFacultyById = (facultyId) => {
-    return faculty[facultyId] || null;  // this was empty!
+    return faculty[facultyId] || null;
 };
 
 const getSortedFaculty = (sortBy) => {
 
-    // THIS was missing — without it, sortBy stays undefined
+
     const validSorts = ['name', 'department', 'title'];
     if (!validSorts.includes(sortBy)) {
         sortBy = 'name';
