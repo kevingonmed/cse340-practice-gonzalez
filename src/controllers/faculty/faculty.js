@@ -29,7 +29,7 @@ const facultyDetailPage = (req, res) => {
 
     if (!faculty) {
 
-        return res.status(404).send("Faculty not found")
+        return res.status(404).render("errors/404");
     }
 
     res.render("faculty/detail", {

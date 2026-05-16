@@ -44,6 +44,13 @@ app.get('/student', (req, res) => {
 
 app.use(routes)
 
+app.use((err, req, res, next) => {
+
+    console.error(err.stack);
+
+    res.status(500).render("errors/500");
+});
+
 app.listen(PORT, () => {
     console.log(`Server running on http://127.0.0.1:${PORT}`);
 });
