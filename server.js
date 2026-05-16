@@ -1,7 +1,7 @@
 import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
-
+import routes from "./src/routes.js"
 const app = express();
 
 
@@ -42,7 +42,9 @@ app.get('/student', (req, res) => {
     res.render('student', { title: "Student Info", student });
 });
 
+app.use(routes)
 
 app.listen(PORT, () => {
     console.log(`Server running on http://127.0.0.1:${PORT}`);
 });
+

@@ -1,0 +1,18 @@
+<h1>Faculty Directory</h1>
+
+<ul>
+
+    <% faculty.forEach(person=> { %>
+
+        <li>
+            <a href="/faculty/<%= person.id %>">
+                <%= person.name %>
+            </a>
+
+            - <%= person.department %>
+                - <%= person.title %>
+        </li>
+
+        <% }) %>
+
+</ul>
