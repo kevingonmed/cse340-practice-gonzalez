@@ -4,10 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>
-        Server Error
-    </title>
+    <title>500 Error</title>
 </head>
 
 <body>
@@ -15,12 +12,22 @@
     <h1>500 - Internal Server Error</h1>
 
     <p>
-        Sorry, something went wrong on the server.
+        Sorry, something went wrong.
     </p>
 
-    <a href="/">
-        Return Home
-    </a>
+    <% if (error) { %>
+
+        <h3>Development Error:</h3>
+
+        <p>
+            <%= error %>
+        </p>
+
+        <% } %>
+
+            <a href="/">
+                Return Home
+            </a>
 
 </body>
 

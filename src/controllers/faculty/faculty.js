@@ -5,7 +5,8 @@ import {
 
 
 const facultyListPage = (req, res) => {
-
+    //Testing 500 case error 
+    throw new Error("Testing 500 error");
     const sortBy = req.query.sort
 
     const faculty = getSortedFaculty(sortBy)
