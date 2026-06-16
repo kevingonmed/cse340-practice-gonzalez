@@ -8,9 +8,12 @@
         <%= title %>
     </title>
     <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="public/css/faculty.css">
+    <%- renderStyles() %>
+        <%- renderScripts() %>
 </head>
 
-<body>
+<body class="<%= bodyClass %>">
 
     <header>
         <nav>
@@ -19,5 +22,26 @@
             <a href="/products">Products</a>
             <a href="/student">Student</a>
             <a href="/faculty">Faculty Directory</a>
+            <% if (isLoggedIn) { %>
+                <a href="/dashboard">Dashboard</a>
+                <a href="/logout">Logout</a>
+                <% } else { %>
+                    <a href="/register">Register</a>
+                    <a href="/login">Login</a>
+                    <% } %>
         </nav>
     </header>
+
+    <% const messages=flash(); const hasMessages=Object.values(messages).some(arr=> arr.length > 0);
+        %>
+        <% if (hasMessages) { %>
+            <div class="flash-messages">
+                <% Object.keys(messages).forEach(type=> { %>
+                    <% messages[type].forEach(message=> { %>
+                        <div class="flash <%= type %>">
+                            <%= message %>
+                        </div>
+                        <% }); %>
+                            <% }); %>
+            </div>
+            <% } %>

@@ -1,46 +1,31 @@
-import {
-    getFacultyById,
-    getSortedFaculty
-} from "../../models/faculty/faculty.js"
+import { getFacultyBySlug, getSortedFaculty } from '../../models/faculty/faculty.js';
 
+const facultyListPage = async (req, res) => {
+    const validSortOptions = ['name', 'department', 'title'];
+    const sortBy = validSortOptions.includes(req.query.sort) ? req.query.sort : 'department';
+    const facultyList = await getSortedFaculty(sortBy);
 
-const facultyListPage = (req, res) => {
-    //Testing 500 case error 
-    throw new Error("Testing 500 error");
-    const sortBy = req.query.sort
+    res.render('faculty/list', {
+        title: 'Faculty Directory',
+        faculty: facultyList,
+        currentSort: sortBy
+    });
+};
 
-    const faculty = getSortedFaculty(sortBy)
+const facultyDetailPage = async (req, res, next) => {
+    const facultySlug = req.params.facultySlug;
+    const facultyMember = await getFacultyBySlug(facultySlug);
 
-    console.log("sortBy:", sortBy);
-    console.log("faculty count:", faculty.length);
-    console.log("faculty:", faculty);
-    res.render("faculty/list", {
-        title: "Faculty Directory",
-        faculty,
-        sortBy
-    })
-}
-
-
-const facultyDetailPage = (req, res) => {
-
-    const facultyId = req.params.facultyId
-
-    const faculty = getFacultyById(facultyId)
-
-    if (!faculty) {
-
-        return res.status(404).render("errors/404");
+    if (Object.keys(facultyMember).length === 0) {
+        const err = new Error(`Faculty member ${facultySlug} not found`);
+        err.status = 404;
+        return next(err);
     }
 
-    res.render("faculty/detail", {
-        title: faculty.name,
-        faculty
-    })
-}
+    res.render('faculty/detail', {
+        title: `${facultyMember.name} - Faculty Profile`,
+        faculty: facultyMember
+    });
+};
 
-
-export {
-    facultyListPage,
-    facultyDetailPage
-}
+export { facultyListPage, facultyDetailPage };

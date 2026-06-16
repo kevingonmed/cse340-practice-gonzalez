@@ -1,0 +1,17 @@
+<%- include('../partials/header') %>
+
+    <main>
+        <h1>Course Catalog</h1>
+        <ul>
+            <% courses.forEach(course=> { %>
+                <li>
+                    <a href="/catalog/<%= course.slug %>">
+                        <%= course.courseCode %> - <%= course.name %>
+                    </a>
+                    <span>(<%= course.creditHours %> credits)</span>
+                </li>
+                <% }); %>
+        </ul>
+    </main>
+
+    <%- include('../partials/footer') %>

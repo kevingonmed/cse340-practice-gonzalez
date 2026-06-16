@@ -1,0 +1,13 @@
+<%- include('../../partials/header') %>
+
+    <main>
+        <h1>Dashboard</h1>
+        <p>Welcome, <%= user.firstName %>!</p>
+        <p>Email: <%= user.email %>
+        </p>
+        <p>Role: <%= user.roleName %>
+        </p>
+        <a href="/logout">Logout</a>
+    </main>
+
+    <%- include('../../partials/footer') %>

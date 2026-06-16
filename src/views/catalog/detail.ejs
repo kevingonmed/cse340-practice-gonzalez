@@ -1,0 +1,52 @@
+<%- include('../partials/header') %>
+
+    <main>
+        <h1>
+            <%= course.courseCode %> - <%= course.name %>
+        </h1>
+        <p>
+            <%= course.description %>
+        </p>
+        <p><strong>Credits:</strong>
+            <%= course.creditHours %>
+        </p>
+        <p><strong>Department:</strong>
+            <%= course.department %>
+        </p>
+
+        <h2>Sections</h2>
+        <% if (sections.length===0) { %>
+            <p>No sections available for this course.</p>
+            <% } else { %>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Professor</th>
+                            <th>Time</th>
+                            <th>Room</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% sections.forEach(section=> { %>
+                            <tr>
+                                <td>
+                                    <a href="/faculty/<%= section.professorSlug %>">
+                                        <%= section.professor %>
+                                    </a>
+                                </td>
+                                <td>
+                                    <%= section.time %>
+                                </td>
+                                <td>
+                                    <%= section.room %>
+                                </td>
+                            </tr>
+                            <% }); %>
+                    </tbody>
+                </table>
+                <% } %>
+
+                    <a href="/catalog">← Back to Catalog</a>
+    </main>
+
+    <%- include('../partials/footer') %>

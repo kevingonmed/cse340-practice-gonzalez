@@ -1,18 +1,18 @@
-<h1>Faculty Directory</h1>
+<%- include('../partials/header') %>
 
-<ul>
+    <h1>Faculty Directory</h1>
 
-    <% faculty.forEach(person=> { %>
+    <ul class="faculty-list">
+        <% faculty.forEach(person=> { %>
+            <li class="faculty-card">
+                <img src="/images/faculty/<%= person.slug %>.jpg" alt="<%= person.name %>" class="faculty-thumb">
+                <a href="/faculty/<%= person.slug %>">
+                    <%= person.name %>
+                </a>
+                - <%= person.department %>
+                    - <%= person.title %>
+            </li>
+            <% }) %>
+    </ul>
 
-        <li>
-            <a href="/faculty/<%= person.id %>">
-                <%= person.name %>
-            </a>
-
-            - <%= person.department %>
-                - <%= person.title %>
-        </li>
-
-        <% }) %>
-
-</ul>
+    <%- include('../partials/footer') %>

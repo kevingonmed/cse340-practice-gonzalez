@@ -3,41 +3,63 @@
  */
 const getCurrentGreeting = () => {
     const currentHour = new Date().getHours();
-
-    if (currentHour < 12) {
-        return 'Good Morning!';
-    }
-
-    if (currentHour < 18) {
-        return 'Good Afternoon!';
-    }
-
+    if (currentHour < 12) return 'Good Morning!';
+    if (currentHour < 18) return 'Good Afternoon!';
     return 'Good Evening!';
 };
 
 /**
- * Middleware to add local variables to res.locals for use in all templates.
- * Templates can access these values but are not required to use them.
+ * Adds dynamic CSS/JS asset management to every request.
+ * Routes can call res.addStyle() or res.addScript() to inject
+ * page-specific assets. Templates call renderStyles() / renderScripts().
+ */
+const setHeadAssetsFunctionality = (res) => {
+    res.locals.styles = [];
+    res.locals.scripts = [];
+
+    res.addStyle = (css, priority = 0) => {
+        res.locals.styles.push({ content: css, priority });
+    };
+
+    res.addScript = (js, priority = 0) => {
+        res.locals.scripts.push({ content: js, priority });
+    };
+
+    res.locals.renderStyles = () => {
+        return res.locals.styles
+            .sort((a, b) => b.priority - a.priority)
+            .map(item => item.content)
+            .join('\n');
+    };
+
+    res.locals.renderScripts = () => {
+        return res.locals.scripts
+            .sort((a, b) => b.priority - a.priority)
+            .map(item => item.content)
+            .join('\n');
+    };
+};
+
+/**
+ * Global middleware — runs on every request.
+ * Sets up res.locals variables available in all templates.
  */
 const addLocalVariables = (req, res, next) => {
-    // Set current year for use in templates
     res.locals.currentYear = new Date().getFullYear();
-
-    // Make NODE_ENV available to all templates
     res.locals.NODE_ENV = process.env.NODE_ENV?.toLowerCase() || 'production';
-
-    // Make req.query available to all templates
     res.locals.queryParams = { ...req.query };
-
-    // Set greeting based on time of day
     res.locals.greeting = `<p>${getCurrentGreeting()}</p>`;
 
-    // Randomly assign a theme class to the body
     const themes = ['blue-theme', 'green-theme', 'red-theme'];
-    const randomTheme = themes[Math.floor(Math.random() * themes.length)];
-    res.locals.bodyClass = randomTheme;
+    res.locals.bodyClass = themes[Math.floor(Math.random() * themes.length)];
 
-    // Continue to the next middleware or route handler
+    // Make logged-in user available to all templates
+    res.locals.isLoggedIn = !!(req.session && req.session.user);
+    res.locals.user = req.session?.user || null;
+
+    // Set up dynamic asset loading
+    setHeadAssetsFunctionality(res);
+
     next();
 };
 

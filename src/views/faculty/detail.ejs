@@ -1,22 +1,24 @@
-<h1>
-    <%= faculty.name %>
-</h1>
+<%- include('../partials/header') %>
 
-<p>Office: <%= faculty.office %>
-</p>
+    <main>
+        <img src="/images/faculty/<%= faculty.slug %>.jpg" alt="<%= faculty.name %>" class="faculty-photo">
 
-<p>Phone: <%= faculty.phone %>
-</p>
+        <h1>
+            <%= faculty.name %>
+        </h1>
 
-<p>Email: <%= faculty.email %>
-</p>
+        <p>Office: <%= faculty.office %>
+        </p>
+        <p>Phone: <%= faculty.phone %>
+        </p>
+        <p>Email: <%= faculty.email %>
+        </p>
+        <p>Department: <%= faculty.department %>
+        </p>
+        <p>Title: <%= faculty.title %>
+        </p>
 
-<p>Department: <%= faculty.department %>
-</p>
+        <a href="/faculty">← Back to Faculty List</a>
+    </main>
 
-<p>Title: <%= faculty.title %>
-</p>
-
-<a href="/faculty">
-    Back to Faculty List
-</a>
+    <%- include('../partials/footer') %>
